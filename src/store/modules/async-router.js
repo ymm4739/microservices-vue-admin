@@ -13,6 +13,10 @@ const permission = {
     SET_ROUTERS: (state, routers) => {
       state.addRouters = routers
       state.routers = constantRouterMap.concat(routers)
+    },
+    SET_EMPTY_ROUTERS: (state) => {
+      state.addRouters = []
+      state.routers = constantRouterMap
     }
   },
   actions: {
@@ -22,6 +26,12 @@ const permission = {
           commit('SET_ROUTERS', routers)
           resolve(routers)
         })
+      })
+    },
+    RemoveRouters ({ commit }) {
+      return new Promise(resolve => {
+        commit('SET_EMPTY_ROUTERS')
+        resolve()
       })
     }
   }

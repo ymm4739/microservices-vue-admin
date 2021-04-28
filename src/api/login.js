@@ -2,7 +2,7 @@ import request from '@/utils/request'
 import axios from 'axios'
 const userApi = {
   Login: '/oauth/oauth/token',
-  Logout: '/user-center/auth/logout',
+  Logout: '/user-center/logout',
   ForgePassword: '/auth/forge-password',
   Register: '/user-center/auth/register',
   twoStepCode: '/auth/2step-code',
@@ -41,12 +41,14 @@ function tansParams (params) {
 
 export function login (params) {
   params['grant_type'] = 'password'
+  const tenantId = process.env.VUE_APP_API_BACKEND_URL.substr(1)
   return axios.post(userApi.Login, params, {
     transformRequest: [(params) => {
       return tansParams(params)
     }],
     headers: {
-      'Authorization': authorizationValue
+      'Authorization': authorizationValue,
+      'tenantId': tenantId
     }
   })
 }

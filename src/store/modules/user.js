@@ -2,7 +2,7 @@ import storage from 'store'
 import { login, getInfo, logout } from '@/api/login'
 import { ACCESS_TOKEN } from '@/store/mutation-types'
 import { welcome } from '@/utils/util'
-
+import store from '@/store'
 const user = {
   state: {
     token: '',
@@ -94,6 +94,7 @@ const user = {
         }).catch(() => {
           resolve()
         }).finally(() => {
+          store.dispatch('RemoveRouters')
           commit('SET_TOKEN', '')
           commit('SET_ROLES', [])
           storage.remove(ACCESS_TOKEN)
